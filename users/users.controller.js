@@ -431,7 +431,7 @@ let authenticate = (req, res) => {
     app.get(sessionChecker, (req, res) => {
       console.log({ status: "session stored" });
     });
-
+    console.log(user);
     //Checking if User exits or not
     if (user) {
       console.log(user);
@@ -1183,12 +1183,18 @@ addMedicalInfo = async (req, res) => {
 
   let d1 = await User.findOneAndUpdate(
     { _id: id },
-    { [field]: data },
+    {
+      [field]: data
+    },
     { new: true }
   );
   let d2 = await Usermeta.findOneAndUpdate(
     { _id: meta },
-    { $push: { [field]: data } },
+    {
+      $push: {
+        [field]: data
+      }
+    },
     { new: true }
   );
   Promise.all([d1, d2])

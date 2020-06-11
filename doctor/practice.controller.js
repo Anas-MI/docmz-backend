@@ -1262,7 +1262,7 @@ let saveSlots = (req, res) => {
 //Search doctors
 
 let searchDocs = (req, res) => {
-  console.log("came here");
+  console.log("came here", req.body);
   var pageNo = parseInt(req.body.pageNo) || 1;
   var size = parseInt(req.body.size) || 10;
 
