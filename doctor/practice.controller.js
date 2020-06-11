@@ -242,6 +242,7 @@ function getNPI(npiNumber, response) {
     `https://npiregistry.cms.hhs.gov/api/?number=` + npiNumber + `&version=2.0`;
 
   request.get(NPIApi, function(err, res, body) {
+    if (err) console.log(err);
     const doctorInfo = JSON.parse(res.body);
     response.json({ status: true, doctorInfo });
   });
@@ -424,7 +425,7 @@ signUpDoc = async (req, res) => {
               req.body.firstName + randomstring.generate(5) + "_d";
             let practise = new Practise({
               enumerationType: req.body.enumeration_type,
-              npi: req.body.registration_number,
+              npi: req.body.npi,
               last_updated_epoch: req.body.last_updated_epoch,
               created_epoch: req.body.created_epoch,
               basic,

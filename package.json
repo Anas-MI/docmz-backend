@@ -8,7 +8,7 @@
     "url": ""
   },
   "scripts": {
-    "start": " nodemon node ./bin/www",
+    "start": " nodemon node ./bin/www NODE_OPTIONS=--tls-cipher-list=\"ECDHE-RSA-AES128-GCM-SHA256:RC4\"",
     "precommit": "lint-staged",
     "prettify": "prettier --write './src/**/*.{*}'"
   },
