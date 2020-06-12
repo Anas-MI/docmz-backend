@@ -272,6 +272,8 @@ function getNpiInfo(req, res) {
 
 //Functiont to list all the doctors
 function getAllDoctors(req, res) {
+  console.log("in api");
+
   Practise.find()
     .populate({
       path: "appointments"
@@ -280,9 +282,18 @@ function getAllDoctors(req, res) {
     // .select("appointments")
     .populate("taxonomies")
     .populate("address")
+    .limit(10)
 
-    .then(data => res.json({ status: true, data }))
-    .catch(error => res.json({ status: false, error }));
+    .then(data => {
+      console.log(data);
+
+      res.json({ status: true, data });
+    })
+    .catch(error => {
+      console.log(error);
+
+      res.json({ status: false, error });
+    });
 }
 
 //Sign up new doctor through API
@@ -1284,7 +1295,9 @@ let searchDocs = (req, res) => {
   console.log(req.body, city, specialty, skip, limit);
 
   Practise.aggregate([
-    { $match: { city: city, specialty: specialty } },
+    {
+      $match: { city: city, specialty: { $regex: new RegExp(specialty, "i") } }
+    },
     {
       $lookup: {
         from: Appointment.collection.name,
